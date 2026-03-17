@@ -7,10 +7,21 @@ require('dotenv').config();
 
 // 初始化Supabase
 const { createClient } = require('@supabase/supabase-js');
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
-);
+let supabase;
+try {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+  
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.warn('Supabase环境变量未设置，部分功能可能无法使用');
+    supabase = null;
+  } else {
+    supabase = createClient(supabaseUrl, supabaseAnonKey);
+  }
+} catch (error) {
+  console.error('Supabase初始化失败:', error);
+  supabase = null;
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -53,11 +64,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = require('./index');
 
 // 同步数据库（仅验证连接，不修改表结构）
-db.sequelize.authenticate().then(() => {
-  console.log('数据库连接成功');
-}).catch(err => {
-  console.error('数据库连接失败:', err);
-});
+if (db.sequelize) {
+  db.sequelize.authenticate().then(() => {
+    console.log('数据库连接成功');
+  }).catch(err => {
+    console.error('数据库连接失败:', err);
+  });
+} else {
+  console.warn('数据库未初始化，部分功能可能无法使用');
+}
 
 // 路由
 app.use('/api/auth', require('./routes/auth'));

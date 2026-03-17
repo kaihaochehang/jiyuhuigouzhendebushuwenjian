@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Announcement } = require('../models');
+const { Announcement } = require('../index');
 const { authenticate } = require('../middleware/auth');
 
 // 获取公告列表（公开接口）

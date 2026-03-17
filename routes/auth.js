@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
-const { User } = require('../models');
+const { User } = require('../index');
 const { generateToken } = require('../middleware/auth');
 const { 
   generateInviteCode, 
