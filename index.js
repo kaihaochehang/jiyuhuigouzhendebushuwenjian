@@ -6,7 +6,23 @@ const DB_URL = process.env.DATABASE_URL;
 let sequelize;
 let db = {
   Sequelize: Sequelize,
-  sequelize: null
+  sequelize: null,
+  // 默认空模型，防止路由调用时出错
+  User: {
+    findByPk: async () => null,
+    findOne: async () => null,
+    findAll: async () => []
+  },
+  Transaction: {
+    findByPk: async () => null,
+    findOne: async () => null,
+    findAll: async () => []
+  },
+  Announcement: {
+    findByPk: async () => null,
+    findOne: async () => null,
+    findAll: async () => []
+  }
 };
 
 try {
@@ -27,9 +43,14 @@ try {
     db.sequelize = sequelize;
     
     // 导入模型
-    db.User = require('./user')(sequelize, Sequelize);
-    db.Transaction = require('./transaction')(sequelize, Sequelize);
-    db.Announcement = require('./announcement')(sequelize, Sequelize);
+    const UserModel = require('./user')(sequelize, Sequelize);
+    const TransactionModel = require('./transaction')(sequelize, Sequelize);
+    const AnnouncementModel = require('./announcement')(sequelize, Sequelize);
+    
+    // 替换默认空模型
+    db.User = UserModel;
+    db.Transaction = TransactionModel;
+    db.Announcement = AnnouncementModel;
     
     // 定义关联关系
     // 用户与交易记录
