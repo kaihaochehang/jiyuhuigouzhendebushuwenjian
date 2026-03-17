@@ -50,7 +50,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 数据库连接
-const db = require('./models');
+const db = require('./index');
 
 // 同步数据库（仅验证连接，不修改表结构）
 db.sequelize.authenticate().then(() => {
