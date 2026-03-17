@@ -47,9 +47,13 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 
-// CORS
+// CORS - 添加生产环境域名
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://192.168.0.126:3000'],
+  origin: [
+    'http://localhost:3000',
+    'http://192.168.0.126:3000',
+    'https://jiyuhuigouzhendebushuwenjian.vercel.app'
+  ],
   credentials: true
 }));
 
