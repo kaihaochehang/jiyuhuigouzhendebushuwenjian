@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { User } = require('../index');
+const db = require('../index');
+const { User } = db;
 
 // 验证JWT令牌
 const authenticate = async (req, res, next) => {

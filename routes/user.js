@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
-const { User, Transaction } = require('../index');
+const db = require('../index');
+const { User, Transaction } = db;
 const { authenticate } = require('../middleware/auth');
 const { hashPassword, verifyPassword } = require('../utils/helpers');
 

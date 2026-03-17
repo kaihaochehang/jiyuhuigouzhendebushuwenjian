@@ -1,5 +1,6 @@
 const cron = require('node-cron');
-const { User } = require('../index');
+const db = require('../index');
+const { User } = db;
 
 // 每日凌晨执行积分释放检查
 // 注意：实际的释放是用户登录时触发，这里只是做一些系统维护工作
