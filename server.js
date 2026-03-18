@@ -99,14 +99,11 @@ app.use((err, req, res, next) => {
 // 启动定时任务
 require('./cron/jobs');
 
-// 只在本地环境启动服务器，Vercel Serverless 不需要
-if (!process.env.VERCEL) {
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`服务器运行在端口 ${PORT}`);
-    console.log(`本地访问: http://localhost:${PORT}`);
-    console.log(`局域网访问: http://192.168.0.126:${PORT}`);
-    console.log(`外部访问: http://0.0.0.0:${PORT}`);
-  });
-}
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`服务器运行在端口 ${PORT}`);
+  console.log(`本地访问: http://localhost:${PORT}`);
+  console.log(`局域网访问: http://192.168.0.126:${PORT}`);
+  console.log(`外部访问: http://0.0.0.0:${PORT}`);
+});
 
 module.exports = app;
