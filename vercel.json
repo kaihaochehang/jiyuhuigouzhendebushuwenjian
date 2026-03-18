@@ -1,22 +1,12 @@
 {
   "version": 2,
-  "builds": [
+  "buildCommand": "npm install && npm run build || echo 'No build script'",
+  "outputDirectory": ".",
+  "framework": null,
+  "rewrites": [
     {
-      "src": "server.js",
-      "use": "@vercel/node"
+      "source": "/(.*)",
+      "destination": "/server.js"
     }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/server.js"
-    }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
